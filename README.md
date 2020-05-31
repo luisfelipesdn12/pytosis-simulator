@@ -4,3 +4,7 @@ Um simulador simples da reprodução celular, utilizando Python e Pygame | A sim
 ## Como rodar?
 
 Clone ou baixe o repositório e execute o main.py
+
+## Funcionamento:
+
+![](https://raw.githubusercontent.com/luisfelipesdn12/pytosis/master/demo/pytosis_main_demo.gif)
