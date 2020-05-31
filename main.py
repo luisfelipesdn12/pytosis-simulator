@@ -16,14 +16,19 @@ if window_is_resizable: window = pygame.display.set_mode(window_size, pygame.RES
 else: window = pygame.display.set_mode(window_size)
 pygame.display.set_icon(window_icon)
 pygame.display.set_caption(title)
-window.fill(color4bg)
+
+# cells variable is a list that contains all the Cell() objects
+# it will be used to "plot" all the itens in the runtime bellow
 cells = [Cell() for _ in range(initial_population)]
 
-sleep_time = 0.07
-c = 1
+# Properties of runtime:
+frame_rate = 0.07
 reproduce_in_n_frames = 100
-mouse_was_pressed = False    
 
+frame = 1
+mouse_was_pressed = False
+
+# Runtime:
 while True:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -32,23 +37,35 @@ while True:
     
     window.fill(color4bg)
 
+    # once the mouse pressed, it will be true forever in runtime
+    # it is used to start the simulation when identif a click
     if pygame.mouse.get_pressed()[0] == 1: mouse_was_pressed = True
 
     if mouse_was_pressed:
         population = len(cells)
-        if c%reproduce_in_n_frames == 0:
+
+        # Reprodution:
+        # happen each `reproduce_in_n_frames` frames 
+        if frame%reproduce_in_n_frames == 0:
+            # this loop runs for each existing cell
             for c in range(population):
+                # the existing cell is attributed to this variable
                 cellMother = cells[c]
+                # create a Cell() object, with default position
                 cellCopy = Cell()
+                # change that position to the mother position
                 cellCopy.pos = cellMother.pos
+                # put the new cell to the the population (cells list)
                 cells.append(cellCopy)
 
         for cell in cells:
             cell.draw(window)
 
-        time.sleep(sleep_time)
-        print(f'CELLS = {population}')
-        print(f'SLEEP_TIME = {sleep_time}')
+        time.sleep(frame_rate)
+        print(f'FRAME: {frame}')
+        print(f'POPULATION: {population}')
+        print(f'FRAME_RATE = {frame_rate}')
+        print(f'REPRODUCE_EACH = {reproduce_in_n_frames} frames')
         print()
-        c += 1
+        frame += 1
     pygame.display.update()
