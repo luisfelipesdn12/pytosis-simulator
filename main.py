@@ -38,7 +38,7 @@ death_in_n_frames = preferences["death_in_n_frames"]
 # the final value must be >= 1.00, otherwise
 # the program breaks in the runtime   
 mortality_rate = preferences["mortality_rate"]
-reproduction_rate = ["reproduction_rate"]
+reproduction_rate = preferences["reproduction_rate"]
 
 frame = 1
 deaths = 0
