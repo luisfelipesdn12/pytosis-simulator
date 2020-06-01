@@ -22,3 +22,11 @@ Um simulador simples da reprodução celular, utilizando Python e Pygame | A sim
 > #### Working:
 
 ![](https://raw.githubusercontent.com/luisfelipesdn12/pytosis-simulator/master/demo/pytosis_main_demo.gif)
+
+## Preferências:
+
+> #### Preferences:
+
+To change things like, colors, size of screen and cells, mortality rate, title, icon etc; go to the `preferences.json` file.
+
+![preferences_demo](https://raw.githubusercontent.com/luisfelipesdn12/pytosis-simulator/preferences/demo/preferences_demo.png)
