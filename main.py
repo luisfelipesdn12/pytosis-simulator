@@ -1,15 +1,23 @@
 # Modules:
-import pygame, time, random, math
+import pygame, time, random, math, json
 # Classes:
 from cell import Cell
 
+# Fetch the preferences in the json file:
+with open("preferences.json", "r") as preferences_json:
+    preferences = json.load(preferences_json)["main"]
+
 # Properties variables:
-title = "Simulador de mitose"
-window_icon = pygame.image.load('./icons/cells.png')
-window_size = width, height = (600, 600)
-window_is_resizable = False
-color4bg = (78,87,117)
-initial_population = 1
+title = preferences["title"]
+window_icon = pygame.image.load(preferences["icon_dir"])
+window_size = width, height = tuple(
+    i for i in list(preferences["window_size"].values())
+)
+window_is_resizable = preferences["is_resizable"]
+color4bg = tuple(
+    rgb for rgb in preferences["color4bg"].values()
+)
+initial_population = preferences["initial_population"]
 
 # Aplication for properties variables:
 if window_is_resizable: window = pygame.display.set_mode(window_size, pygame.RESIZABLE)
@@ -22,15 +30,15 @@ pygame.display.set_caption(title)
 cells = [Cell() for _ in range(initial_population)]
 
 # Properties of runtime:
-frame_rate = 0.07
-reproduce_in_n_frames = 100
-death_in_n_frames = 200
+frame_rate = preferences["frame_rate"]
+reproduce_in_n_frames = preferences["reproduce_in_n_frames"]
+death_in_n_frames = preferences["death_in_n_frames"]
 # the variables bellow is apercentage value
-# and values must be like (0.27), (27/100) etc
+# and values must be like (0.27)
 # the final value must be >= 1.00, otherwise
 # the program breaks in the runtime   
-mortality_rate = 0.10 
-reproduction_rate = 85/100
+mortality_rate = preferences["mortality_rate"]
+reproduction_rate = ["reproduction_rate"]
 
 frame = 1
 deaths = 0

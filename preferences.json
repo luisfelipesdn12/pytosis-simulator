@@ -1,0 +1,32 @@
+{
+    "cell" : {
+        "color" : {
+            "r" : 219,
+            "g" : 224,
+            "b" : 204
+        },
+        "radius" : 20
+    },
+
+    "main" : {
+        "title" : "Pytosis Simulator",
+        "icon_dir" : "./icons/cells.png",
+        "window_size" : {
+            "width" : 600,
+            "height" : 600
+        },
+        "is_resizable" : false,
+        "color4bg" : {
+            "r" : 78,
+            "g" : 87,
+            "b" : 117
+        },
+        "initial_population" : 1,
+
+        "frame_rate" : 0.07,
+        "reproduce_in_n_frames" : 100,
+        "death_in_n_frames" : 200,
+        "mortality_rate" : 0.10,
+        "reproduction_rate" : 0.85
+    }
+}

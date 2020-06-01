@@ -1,13 +1,18 @@
 # Modules:
 from random import randint
-import pygame
+import pygame, json
+
+with open("preferences.json", "r") as preferences_json:
+    preferences = json.load(preferences_json)["cell"]
 
 class Cell():
     # Default variables for the objects:
     pos = None
-    color = (219,224,204)
     window = None
-    radius = 25
+    color = tuple(
+        rgb for rgb in preferences["color"].values()
+    )
+    radius = preferences["radius"]
 
     def define_pos(self, actual_pos=None, range = 5):
         '''
