@@ -18,12 +18,39 @@ color4bg = tuple(
     rgb for rgb in preferences["color4bg"].values()
 )
 initial_population = preferences["initial_population"]
+overpopulation_point = preferences["overpopulation_point"]
 
 # Aplication for properties variables:
 if window_is_resizable: window = pygame.display.set_mode(window_size, pygame.RESIZABLE)
 else: window = pygame.display.set_mode(window_size)
 pygame.display.set_icon(window_icon)
 pygame.display.set_caption(title)
+
+if overpopulation_point:
+    def returnMaxPopulation(window_size:tuple, cell_radius):
+        '''
+        Given: the tuple of window size with two
+        values representing the width and height;
+        the cell object default radius.
+
+        Returns: the minimum n of cells to fill the
+        screen, then, the max n of cells to not be
+        overpopulated.
+        '''
+        width, height = window_size
+        cell_diameter = cell_radius*2
+
+        return(
+            (width*height) / (cell_radius**2)
+        )
+    
+    max_population = returnMaxPopulation(
+        window_size, Cell().radius
+    )
+
+    deaths_percent_in_overpopulation_control = preferences[
+        "deaths_percent_in_overpopulation_control"
+    ]
 
 # cells variable is a list that contains all the Cell() objects
 # it will be used to "plot" all the itens in the runtime bellow
@@ -82,8 +109,8 @@ while True:
         else: cells_to_be_mothers = 0
 
         # Death:
-        # delete random cells of the population follows
-        # the value of assigmented in ´mortality_rate´
+        # delete random cells of the population following
+        # the value assigmented in ´mortality_rate´ and
         # happen each ´death_in_n_frames´ frames
         if frame%death_in_n_frames == 0:
             # the loop runs for ´mortalit_rate´ percet of 
@@ -93,6 +120,21 @@ while True:
                 cell_to_be_killed = random.choice(cells)
                 cells.remove(cell_to_be_killed)
         else: cells_to_be_killed = 0
+
+        # Overpopulation control:
+        # delete random cells of the population following
+        # the value of assigmented in `deaths_percent_in_
+        # overpopulation_control` and happen when the cells
+        # fill the scren as defined in returnMaxPopulation()
+        if overpopulation_point and population > max_population:
+            catastrofe_victims = math.ceil(
+                population * deaths_percent_in_overpopulation_control
+            )
+
+            for _ in range(catastrofe_victims):
+                victim = random.choice(cells)
+                cells.remove(victim)
+        else: catastrofe_victims = 0
 
         # Plots
         for cell in cells:
@@ -118,6 +160,6 @@ while True:
 
         frame += 1
         reproductions += cells_to_be_mothers
-        deaths += cells_to_be_killed
+        deaths += (cells_to_be_killed + catastrofe_victims)
 
     pygame.display.update()

@@ -24,9 +24,11 @@
         "initial_population" : 1,
 
         "frame_rate" : 0.07,
-        "reproduce_in_n_frames" : 100,
+        "reproduce_in_n_frames" : 50,
         "death_in_n_frames" : 200,
-        "mortality_rate" : 0.10,
-        "reproduction_rate" : 0.85
+        "mortality_rate" : 0.15,
+        "reproduction_rate" : 0.85,
+        "overpopulation_point" : true,
+        "deaths_percent_in_overpopulation_control" : 0.75
     }
 }
