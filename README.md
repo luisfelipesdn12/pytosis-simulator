@@ -1,6 +1,8 @@
 # pytosis-simulator
 Um simulador simples da reprodução celular, utilizando Python e Pygame | A simple simulator of the cells reproduction, using Python and Pygame.
 
+[![CodeFactor](https://www.codefactor.io/repository/github/luisfelipesdn12/pytosis-simulator/badge)](https://www.codefactor.io/repository/github/luisfelipesdn12/pytosis-simulator)
+
 ## Como rodar? 
 
 > #### How to run?

@@ -1,11 +1,15 @@
 # Modules:
-import pygame, time, random, math, json
+import pygame
+from time import sleep
+from random import choice
+from math import ceil
+from json import load
 # Classes:
 from cell import Cell
 
 # Fetch the preferences in the json file:
 with open("preferences.json", "r") as preferences_json:
-    preferences = json.load(preferences_json)["main"]
+    preferences = load(preferences_json)["main"]
 
 # Properties variables:
 title = preferences["title"]
@@ -21,8 +25,11 @@ initial_population = preferences["initial_population"]
 overpopulation_point = preferences["overpopulation_point"]
 
 # Aplication for properties variables:
-if window_is_resizable: window = pygame.display.set_mode(window_size, pygame.RESIZABLE)
-else: window = pygame.display.set_mode(window_size)
+if window_is_resizable:
+    window = pygame.display.set_mode(window_size, pygame.RESIZABLE)
+else:
+    window = pygame.display.set_mode(window_size)
+
 pygame.display.set_icon(window_icon)
 pygame.display.set_caption(title)
 
@@ -84,7 +91,8 @@ while True:
 
     # once the mouse pressed, it will be true forever in runtime
     # it is used to start the simulation when identif a click
-    if pygame.mouse.get_pressed()[0] == 1: mouse_was_pressed = True
+    if pygame.mouse.get_pressed()[0] == 1:
+        mouse_was_pressed = True
 
     if mouse_was_pressed:
         population = len(cells)
@@ -96,7 +104,7 @@ while True:
             # this loop runs for each existing cell if the reproduction rate == 1.00,
             # otherwise, runs for `reproduction_rate` percent of cells
             # the loop breaks case the ´reproduction_rate´ > 1.00
-            cells_to_be_mothers = math.ceil(population*reproduction_rate)
+            cells_to_be_mothers = ceil(population*reproduction_rate)
             for c in range(cells_to_be_mothers):
                 # the existing cell is attributed to this variable
                 cellMother = cells[c]
@@ -115,9 +123,9 @@ while True:
         if frame%death_in_n_frames == 0:
             # the loop runs for ´mortalit_rate´ percet of 
             # population breaks case the ´mortality_rate´ > 1.00
-            cells_to_be_killed = math.ceil(population*mortality_rate)
+            cells_to_be_killed = ceil(population*mortality_rate)
             for _ in range(cells_to_be_killed):
-                cell_to_be_killed = random.choice(cells)
+                cell_to_be_killed = choice(cells)
                 cells.remove(cell_to_be_killed)
         else: cells_to_be_killed = 0
 
@@ -127,12 +135,12 @@ while True:
         # overpopulation_control` and happen when the cells
         # fill the scren as defined in returnMaxPopulation()
         if overpopulation_point and population > max_population:
-            catastrofe_victims = math.ceil(
+            catastrofe_victims = ceil(
                 population * deaths_percent_in_overpopulation_control
             )
 
             for _ in range(catastrofe_victims):
-                victim = random.choice(cells)
+                victim = choice(cells)
                 cells.remove(victim)
         else: catastrofe_victims = 0
 
@@ -141,7 +149,7 @@ while True:
             cell.draw(window)
 
         # Logs:
-        time.sleep(frame_rate)
+        sleep(frame_rate)
 
         log_strings = [
             f'FRAME: {frame}',
@@ -155,7 +163,8 @@ while True:
             f'DEATH_EACH = {death_in_n_frames} frames'
         ]
 
-        for log_string in log_strings: print(log_string)
+        for log_string in log_strings:
+            print(log_string)
         print('\n=======================\n')
 
         frame += 1
